@@ -35,26 +35,7 @@ public class StockQuoteController {
     }
 
     @PostMapping
-    public void add(@RequestBody StockQuoteDto request) throws ParseException {
-
-        System.out.println(request);
-
-
-//        // TODO: I'm pretty sure that there's a much better way to do this in Java!!!! ;)
-//        StockQuoteDto dto = new StockQuoteDto();
-//        dto.setId((String) request.get("id"));
-//
-//        HashMap<String, List<String>> quotes = (HashMap<String, List<String>>) request.get("quotes");
-//
-//        Set<String> keys = quotes.keySet();
-//
-//        for(String k: keys){
-//            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(k);
-//            Float value = Float.parseFloat(String.valueOf(quotes.get(k)));
-//            dto.getQuotes().add(new StockQuoteDto.Quote(date, value));
-//        }
-//
-//        service.save(dto);
-//        return (ResponseEntity) ResponseEntity.status(HttpStatus.CREATED).body("Created");
+    public void add(@RequestBody StockQuoteDto request) {
+        service.save(request);
     }
 }

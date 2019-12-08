@@ -16,7 +16,19 @@ public class StockQuoteService implements IStockQuoteService {
     IStockQuoteRepository repository;
 
     @Override
-    public void save(StockQuoteDto quoteDto) {
+    public void save(StockQuoteDto dto) {
+
+        if(dto.getQuotes().isEmpty()) return;
+
+        dto.getQuotes().forEach((date, value) -> {
+            StockQuote quote = new StockQuote();
+            quote.setQuoteId(dto.getId());
+            quote.setDate(date);
+            quote.setValue(value);
+
+            repository.save(quote);
+        } );
+
 //
 //        quoteDto.getQuotes().forEach(q -> {
 //            StockQuote quote = new StockQuote();

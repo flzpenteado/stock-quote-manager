@@ -48,11 +48,11 @@ public class StockQuote implements Serializable {
 
     static class CompositeId implements Serializable{
         protected String quoteId;
-        protected  Date date;
+        protected  String date;
 
         private CompositeId() {}
 
-        private CompositeId (String quoteId, Date date){
+        private CompositeId (String quoteId, String date){
             this.quoteId = quoteId;
             this.date = date;
         }
