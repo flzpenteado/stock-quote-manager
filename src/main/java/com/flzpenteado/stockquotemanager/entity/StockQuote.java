@@ -8,29 +8,19 @@ import java.util.Date;
 
 
 @Entity
+@IdClass(StockQuote.CompositeId.class)
 public class StockQuote implements Serializable {
 
     private static final long serialVersionUID = 1693850165739564098L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "quote_id")
     private String quoteId;
 
-    @Type(type="date")
-    private Date date;
+    @Id
+    private String date;
 
     private Float value;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getQuoteId() {
         return quoteId;
@@ -40,11 +30,11 @@ public class StockQuote implements Serializable {
         this.quoteId = quoteId;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -55,4 +45,17 @@ public class StockQuote implements Serializable {
     public void setValue(Float value) {
         this.value = value;
     }
+
+    static class CompositeId implements Serializable{
+        protected String quoteId;
+        protected  Date date;
+
+        private CompositeId() {}
+
+        private CompositeId (String quoteId, Date date){
+            this.quoteId = quoteId;
+            this.date = date;
+        }
+    }
+
 }
