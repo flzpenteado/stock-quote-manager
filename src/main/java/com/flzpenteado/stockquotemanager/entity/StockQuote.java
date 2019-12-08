@@ -1,8 +1,8 @@
 package com.flzpenteado.stockquotemanager.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,11 +13,13 @@ public class StockQuote implements Serializable {
     private static final long serialVersionUID = 1693850165739564098L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "quote_id")
     private String quoteId;
 
+    @Type(type="date")
     private Date date;
 
     private Float value;
