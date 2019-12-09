@@ -54,5 +54,4 @@ public class StockQuote implements Serializable {
             this.date = date;
         }
     }
-
 }

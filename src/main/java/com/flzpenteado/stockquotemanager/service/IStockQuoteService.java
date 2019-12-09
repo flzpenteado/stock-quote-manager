@@ -5,9 +5,9 @@ import com.flzpenteado.stockquotemanager.dto.stockquote.StockQuoteDto;
 import java.util.List;
 
 public interface IStockQuoteService {
-    void save (StockQuoteDto quoteDto);
+    void save (StockQuoteDto quoteDto) throws Exception;
 
-    StockQuoteDto findByQuoteId(String quoteId);
+    StockQuoteDto findByStockId(String quoteId);
 
     List<StockQuoteDto> getAll();
 }

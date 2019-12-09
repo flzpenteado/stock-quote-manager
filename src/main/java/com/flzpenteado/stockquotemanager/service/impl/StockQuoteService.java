@@ -2,10 +2,10 @@ package com.flzpenteado.stockquotemanager.service.impl;
 
 import com.flzpenteado.stockquotemanager.dto.stockquote.StockQuoteDto;
 import com.flzpenteado.stockquotemanager.entity.StockQuote;
+import com.flzpenteado.stockquotemanager.exception.StockNotFoundException;
 import com.flzpenteado.stockquotemanager.repository.IStockQuoteRepository;
 import com.flzpenteado.stockquotemanager.service.IStockQuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,10 +18,18 @@ public class StockQuoteService implements IStockQuoteService {
     @Autowired
     IStockQuoteRepository repository;
 
+    @Autowired
+    StockService stockService;
+
     @Override
-    public void save(StockQuoteDto dto) {
+    public void save(StockQuoteDto dto) throws StockNotFoundException {
 
         if(dto.getQuotes().isEmpty()) return;
+
+        //TODO: Use Validation Pattern
+        if (!stockService.stockExists(dto.getId())){
+            throw new StockNotFoundException("Invalid stock");
+        }
 
         dto.getQuotes().forEach((date, value) -> {
             StockQuote quote = new StockQuote();
@@ -33,19 +41,8 @@ public class StockQuoteService implements IStockQuoteService {
         } );
     }
 
-    private StockQuoteDto convertToDto(String stockId, List<StockQuote> list){
-        StockQuoteDto dto = new StockQuoteDto();
-        dto.setId(stockId);
-
-        list.forEach(item -> {
-            dto.getQuotes().put(item.getDate(), item.getValue());
-        });
-
-        return  dto;
-    }
-
     @Override
-    public StockQuoteDto findByQuoteId(String stockId) {
+    public StockQuoteDto findByStockId(String stockId) {
          List<StockQuote> quotes = repository.findByQuoteIdEquals(stockId);
 
          if(quotes.size() == 0) return null;
@@ -70,17 +67,14 @@ public class StockQuoteService implements IStockQuoteService {
         return dtoList;
     }
 
-//    @Override
-//    public List<StockQuoteRequestDto> getAll() {
-//
-//        List<StockQuote> quotes = repository.findAll();
-//
-//        quotes.forEach(quote -> {
-//
-//        });
-//
-//        return null;
-//    }
+    private StockQuoteDto convertToDto(String stockId, List<StockQuote> list){
+        StockQuoteDto dto = new StockQuoteDto();
+        dto.setId(stockId);
 
+        list.forEach(item -> {
+            dto.getQuotes().put(item.getDate(), item.getValue());
+        });
 
+        return  dto;
+    }
 }
