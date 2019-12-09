@@ -1,11 +1,7 @@
 package com.flzpenteado.stockquotemanager.entity;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-
 
 @Entity
 @IdClass(StockQuote.CompositeId.class)
@@ -46,13 +42,14 @@ public class StockQuote implements Serializable {
         this.value = value;
     }
 
-    static class CompositeId implements Serializable{
+    static class CompositeId implements Serializable {
         protected String quoteId;
-        protected  String date;
+        protected String date;
 
-        private CompositeId() {}
+        private CompositeId() {
+        }
 
-        private CompositeId (String quoteId, String date){
+        private CompositeId(String quoteId, String date) {
             this.quoteId = quoteId;
             this.date = date;
         }
